@@ -10,6 +10,7 @@ export const currentCatagory = atom("");
 export const ispopup = atom(false);
 export const isEdit = atom(false);
 export const isDelete = atom(false);
+export const isEmptyTitle = atom(false);
 
 
 export const listTodo = atom([
