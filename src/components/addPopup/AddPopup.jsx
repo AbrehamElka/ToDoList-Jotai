@@ -1,11 +1,13 @@
 import { useAtom } from "jotai";
 import { ispopup, titleTodo, descriptionTodo, catagoryTodo, listTodo } from "../DB";
-
+import EmptyTitleWarning from "./EmptyTitleWarning";
+import { isEmptyTitle } from "../DB";
 
 const AddPopup = () => {
     const [, setPopup] = useAtom(ispopup);
     const [lists, setLists] = useAtom(listTodo);
 
+    const [isEmpty, setEmpty] = useAtom(isEmptyTitle);
     const [titleAtom, setTitle] = useAtom(titleTodo);
     const [descriptionAtom, setDescription] = useAtom(descriptionTodo);
     const [catagoryAtom, setCatagory] = useAtom(catagoryTodo);
@@ -20,6 +22,11 @@ const AddPopup = () => {
         setCatagory(event.target.value);
     }
     const handelSubmit = () => {
+        if (titleAtom.trim() === "") {
+            console.log("Can Not Submit Empty Title");
+            setEmpty(true);
+            return;
+        }
         const newTodo = {
             id: lists.length + 1,
             title: titleAtom,
@@ -80,6 +87,7 @@ const AddPopup = () => {
                 Close
             </button>
         </div>
+        {isEmpty && <EmptyTitleWarning />}
     </div>)
 }
 
